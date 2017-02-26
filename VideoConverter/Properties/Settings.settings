@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VideoConverter.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LastOutputDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FtpUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">northsid</Value>
+    </Setting>
+    <Setting Name="FtpPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="VideoManagerUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.northsidebaptistmc.org/streaming_archive/</Value>
+    </Setting>
+    <Setting Name="AudioManagerUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.northsidebaptistmc.org/sermons/audio_manager/</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
