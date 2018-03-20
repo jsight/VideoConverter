@@ -7,7 +7,6 @@ namespace VideoConverter
 {
     enum UploadMode
     {
-        Website,
         Youtube,
         No_Upload
     }

@@ -36,7 +36,7 @@ namespace VideoConverter
             lblProgress.Visible = false;
             lblProgressText.Visible = false;
             lblProgressText.Text = "";
-            checkBoxWebsiteUpload.Checked = true;
+            checkboxFullUpload.Checked = true;
             checkBoxYouTubeUpload.Checked = true;
         }
 
@@ -77,7 +77,7 @@ namespace VideoConverter
 
             numericSkipMinutesWebsite.Enabled = val;
             numericSkipSecondsWebsite.Enabled = val;
-            checkBoxWebsiteUpload.Enabled = val;
+            checkboxFullUpload.Enabled = val;
 
             numericSkipMinutesYouTube.Enabled = val;
             numericSkipSecondsYouTube.Enabled = val;
@@ -140,27 +140,28 @@ namespace VideoConverter
                 {
                     string errors = "";
 
-                    if (checkBoxWebsiteUpload.Checked)
+                    if (checkboxFullUpload.Checked)
                     {
-                        string newErrors = ExecuteConversion(WEBSITE_COMMAND_TEMPLATE_FILE, UploadMode.Website, inputFileInfo, outputFile, serviceName, scriptureReference, serviceDate, (int)numericSkipMinutesWebsite.Value, (int)numericSkipSecondsWebsite.Value, true);
+                        string title = "(Full Service) " + serviceName;
+                        string[] tags = new string[] { "Tri-City Baptist Church", "Goose Creek", "Moncks Corner", "Summerville", "full" };
+                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, inputFileInfo, outputFile, title, scriptureReference, tags, serviceDate, (int)numericSkipMinutesWebsite.Value, (int)numericSkipSecondsWebsite.Value, true);
                         if (newErrors != "")
                             errors += newErrors + "\n\n";
                     }
 
                     if (checkBoxYouTubeUpload.Checked)
                     {
-                        // Only make it visible by default if we are not also uploading it to the website.
-                        bool visible = !checkBoxWebsiteUpload.Checked;
                         string outputFileYoutube = txtOutputDir.Text + @"\" + inputFileInfo.Name.Replace(inputFileInfo.Extension, "_Youtube.mp4");
-
-                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, inputFileInfo, outputFileYoutube, serviceName, scriptureReference, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, visible);
+                        string[] tags = new string[] { "Tri-City Baptist Church", "Goose Creek", "Moncks Corner", "Summerville", "trimmed" };
+                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, inputFileInfo, outputFileYoutube, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, true);
                         if (newErrors != "")
                             errors += newErrors + "\n\n";
                     }
 
-                    if (!checkBoxWebsiteUpload.Checked && !checkBoxYouTubeUpload.Checked)
+                    if (!checkboxFullUpload.Checked && !checkBoxYouTubeUpload.Checked)
                     {
-                        string newErrors = ExecuteConversion(WEBSITE_COMMAND_TEMPLATE_FILE, UploadMode.No_Upload, inputFileInfo, outputFile, serviceName, scriptureReference, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, false);
+                        string[] tags = new string[] { };
+                        string newErrors = ExecuteConversion(WEBSITE_COMMAND_TEMPLATE_FILE, UploadMode.No_Upload, inputFileInfo, outputFile, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, false);
                         if (newErrors != "")
                             errors += newErrors + "\n\n";
                     }
@@ -188,7 +189,7 @@ namespace VideoConverter
             }
         }
 
-        private string ExecuteConversion(string commandTemplateFile, UploadMode uploadMode, FileInfo inputFileInfo, string outputFile, string serviceName, string scriptureReference, DateTime serviceDate, int skipMinutes, int skipSeconds, bool visible)
+        private string ExecuteConversion(string commandTemplateFile, UploadMode uploadMode, FileInfo inputFileInfo, string outputFile, string serviceName, string scriptureReference, string[] tags, DateTime serviceDate, int skipMinutes, int skipSeconds, bool visible)
         {
             string errors = "";
             int totalSkipSeconds = (60 * skipMinutes) + skipSeconds;
@@ -225,14 +226,6 @@ namespace VideoConverter
                 FileInfo outputFileInfo = new FileInfo(outputFile);
                 outputFileInfo.Delete();
                 VideoManagerClient client = new VideoManagerClient();
-                if (uploadMode != UploadMode.No_Upload)
-                {
-                    if (!client.Login())
-                    {
-                        ShowMessageBox("Login to Video Manager failed! Check credentials in settings.");
-                        return "";
-                    }
-                }
 
                 string homePath = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
                 using (StreamWriter outWriter = new StreamWriter(homePath + @"\videoconversionout_" + uploadMode + ".log"))
@@ -337,17 +330,11 @@ namespace VideoConverter
                         });
                     };
                     string remoteFilename;
-                    client.UploadVideo(uploadMode, out remoteFilename, outputFileInfo.FullName, serviceName, scriptureReference, progressCallback);
+                    client.UploadVideo(uploadMode, out remoteFilename, outputFileInfo.FullName, serviceName, scriptureReference, tags, progressCallback);
                     this.Invoke((MethodInvoker)delegate
                         {
                             lblProgressText.Text = "Upload complete!";
                         });
-                    client.Login();
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        lblProgressText.Text = "Login Complete!";
-                    });
-                    client.UpdateVideo(remoteFilename, serviceDate, serviceName, scriptureReference, visible);
                     this.Invoke((MethodInvoker)delegate
                     {
                         lblProgressText.Text = uploadMode + " Video Update Complete!";

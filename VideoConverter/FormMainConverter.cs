@@ -24,10 +24,7 @@ namespace VideoConverter
         {
             VideoForm videoForm = new VideoForm();
             videoForm.MainForm = this;
-            AudioForm audioForm = new AudioForm();
-            audioForm.MainForm = this;
-            tabVideo.Controls.Add(videoForm);
-            tabAudio.Controls.Add(audioForm);
+            panel1.Controls.Add(videoForm);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,15 +33,6 @@ namespace VideoConverter
             {
                 AboutBox1 aboutBox1 = new AboutBox1();
                 aboutBox1.ShowDialog(this);
-            }
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (new CenterWinDialog(this))
-            {
-                VideoConverterSettings settings = new VideoConverterSettings();
-                settings.ShowDialog(this);
             }
         }
     }

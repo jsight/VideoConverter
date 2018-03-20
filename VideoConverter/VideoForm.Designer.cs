@@ -54,7 +54,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.checkBoxWebsiteUpload = new System.Windows.Forms.CheckBox();
+            this.checkboxFullUpload = new System.Windows.Forms.CheckBox();
             this.checkBoxYouTubeUpload = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipSecondsWebsite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipMinutesWebsite)).BeginInit();
@@ -290,18 +290,22 @@
             this.label9.TabIndex = 45;
             this.label9.Text = "Skip First (YouTube):";
             // 
-            // checkBoxWebsiteUpload
+            // checkboxFullUpload
             // 
-            this.checkBoxWebsiteUpload.AutoSize = true;
-            this.checkBoxWebsiteUpload.Location = new System.Drawing.Point(8, 162);
-            this.checkBoxWebsiteUpload.Name = "checkBoxWebsiteUpload";
-            this.checkBoxWebsiteUpload.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxWebsiteUpload.TabIndex = 40;
-            this.checkBoxWebsiteUpload.UseVisualStyleBackColor = true;
+            this.checkboxFullUpload.AutoSize = true;
+            this.checkboxFullUpload.Checked = true;
+            this.checkboxFullUpload.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkboxFullUpload.Location = new System.Drawing.Point(8, 162);
+            this.checkboxFullUpload.Name = "checkboxFullUpload";
+            this.checkboxFullUpload.Size = new System.Drawing.Size(15, 14);
+            this.checkboxFullUpload.TabIndex = 40;
+            this.checkboxFullUpload.UseVisualStyleBackColor = true;
             // 
             // checkBoxYouTubeUpload
             // 
             this.checkBoxYouTubeUpload.AutoSize = true;
+            this.checkBoxYouTubeUpload.Checked = true;
+            this.checkBoxYouTubeUpload.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxYouTubeUpload.Location = new System.Drawing.Point(8, 193);
             this.checkBoxYouTubeUpload.Name = "checkBoxYouTubeUpload";
             this.checkBoxYouTubeUpload.Size = new System.Drawing.Size(15, 14);
@@ -313,7 +317,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.checkBoxYouTubeUpload);
-            this.Controls.Add(this.checkBoxWebsiteUpload);
+            this.Controls.Add(this.checkboxFullUpload);
             this.Controls.Add(this.numericSkipSecondsYouTube);
             this.Controls.Add(this.numericSkipMinutesYouTube);
             this.Controls.Add(this.label7);
@@ -379,7 +383,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox checkBoxWebsiteUpload;
+        private System.Windows.Forms.CheckBox checkboxFullUpload;
         private System.Windows.Forms.CheckBox checkBoxYouTubeUpload;
     }
 }
