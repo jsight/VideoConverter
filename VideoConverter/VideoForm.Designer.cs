@@ -56,6 +56,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.checkboxFullUpload = new System.Windows.Forms.CheckBox();
             this.checkBoxYouTubeUpload = new System.Windows.Forms.CheckBox();
+            this.checkboxFacebook = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipSecondsWebsite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipMinutesWebsite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipSecondsYouTube)).BeginInit();
@@ -312,10 +313,21 @@
             this.checkBoxYouTubeUpload.TabIndex = 55;
             this.checkBoxYouTubeUpload.UseVisualStyleBackColor = true;
             // 
+            // checkboxFacebook
+            // 
+            this.checkboxFacebook.AutoSize = true;
+            this.checkboxFacebook.Location = new System.Drawing.Point(369, 193);
+            this.checkboxFacebook.Name = "checkboxFacebook";
+            this.checkboxFacebook.Size = new System.Drawing.Size(123, 17);
+            this.checkboxFacebook.TabIndex = 66;
+            this.checkboxFacebook.Text = "Upload to Facebook";
+            this.checkboxFacebook.UseVisualStyleBackColor = true;
+            // 
             // VideoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkboxFacebook);
             this.Controls.Add(this.checkBoxYouTubeUpload);
             this.Controls.Add(this.checkboxFullUpload);
             this.Controls.Add(this.numericSkipSecondsYouTube);
@@ -385,5 +397,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox checkboxFullUpload;
         private System.Windows.Forms.CheckBox checkBoxYouTubeUpload;
+        private System.Windows.Forms.CheckBox checkboxFacebook;
     }
 }

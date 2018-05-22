@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 using System.Windows.Forms;
+
+using Facebook;
 
 namespace VideoConverter
 {
@@ -16,6 +16,13 @@ namespace VideoConverter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            FacebookClient.SetDefaultHttpWebRequestFactory(url => {
+                var request = new HttpWebRequestWrapper((HttpWebRequest)WebRequest.Create(url));
+                request.Timeout = 1000 * 60 * 60;
+                return request;
+            });
+
             Application.Run(new FormMainConverter());
         }
     }

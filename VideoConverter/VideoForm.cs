@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -38,6 +35,20 @@ namespace VideoConverter
             lblProgressText.Text = "";
             checkboxFullUpload.Checked = true;
             checkBoxYouTubeUpload.Checked = true;
+            checkboxFacebook.Checked = facebookSettingsAvailable();
+        }
+
+        private bool facebookSettingsAvailable()
+        {
+            var facebookToken = Properties.Settings.Default.FacebookToken;
+            if (facebookToken == null || facebookToken.Trim() == "")
+                return false;
+
+            var facebookPageID = Properties.Settings.Default.FacebookPageID;
+            if (facebookPageID == null || facebookPageID.Trim() == "")
+                return false;
+
+            return true;
         }
 
         private void btnSelectInput_Click(object sender, EventArgs e)
@@ -82,6 +93,7 @@ namespace VideoConverter
             numericSkipMinutesYouTube.Enabled = val;
             numericSkipSecondsYouTube.Enabled = val;
             checkBoxYouTubeUpload.Enabled = val;
+            checkboxFacebook.Enabled = val;
         }
 
         private void ShowMessageBox(string txt)
@@ -144,16 +156,17 @@ namespace VideoConverter
                     {
                         string title = "(Full Service) " + serviceName;
                         string[] tags = new string[] { "Tri-City Baptist Church", "Goose Creek", "Moncks Corner", "Summerville", "full" };
-                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, inputFileInfo, outputFile, title, scriptureReference, tags, serviceDate, (int)numericSkipMinutesWebsite.Value, (int)numericSkipSecondsWebsite.Value, true);
+                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, UploadMode.No_Upload, inputFileInfo, outputFile, title, scriptureReference, tags, serviceDate, (int)numericSkipMinutesWebsite.Value, (int)numericSkipSecondsWebsite.Value, true);
                         if (newErrors != "")
                             errors += newErrors + "\n\n";
                     }
 
                     if (checkBoxYouTubeUpload.Checked)
                     {
-                        string outputFileYoutube = txtOutputDir.Text + @"\" + inputFileInfo.Name.Replace(inputFileInfo.Extension, "_Youtube.mp4");
+                        string outputFileYoutube = txtOutputDir.Text + @"\" + inputFileInfo.Name.Replace(inputFileInfo.Extension, "_ytandfb.mp4");
                         string[] tags = new string[] { "Tri-City Baptist Church", "Goose Creek", "Moncks Corner", "Summerville", "trimmed" };
-                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, inputFileInfo, outputFileYoutube, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, true);
+                        UploadMode uploadMode2 = this.checkboxFacebook.Checked ? UploadMode.Facebook : UploadMode.No_Upload;
+                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, uploadMode2, inputFileInfo, outputFileYoutube, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, true);
                         if (newErrors != "")
                             errors += newErrors + "\n\n";
                     }
@@ -161,7 +174,7 @@ namespace VideoConverter
                     if (!checkboxFullUpload.Checked && !checkBoxYouTubeUpload.Checked)
                     {
                         string[] tags = new string[] { };
-                        string newErrors = ExecuteConversion(WEBSITE_COMMAND_TEMPLATE_FILE, UploadMode.No_Upload, inputFileInfo, outputFile, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, false);
+                        string newErrors = ExecuteConversion(WEBSITE_COMMAND_TEMPLATE_FILE, UploadMode.No_Upload, UploadMode.No_Upload, inputFileInfo, outputFile, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, false);
                         if (newErrors != "")
                             errors += newErrors + "\n\n";
                     }
@@ -189,7 +202,7 @@ namespace VideoConverter
             }
         }
 
-        private string ExecuteConversion(string commandTemplateFile, UploadMode uploadMode, FileInfo inputFileInfo, string outputFile, string serviceName, string scriptureReference, string[] tags, DateTime serviceDate, int skipMinutes, int skipSeconds, bool visible)
+        private string ExecuteConversion(string commandTemplateFile, UploadMode uploadMode1, UploadMode uploadMode2, FileInfo inputFileInfo, string outputFile, string serviceName, string scriptureReference, string[] tags, DateTime serviceDate, int skipMinutes, int skipSeconds, bool visible)
         {
             string errors = "";
             int totalSkipSeconds = (60 * skipMinutes) + skipSeconds;
@@ -228,7 +241,7 @@ namespace VideoConverter
                 VideoManagerClient client = new VideoManagerClient();
 
                 string homePath = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-                using (StreamWriter outWriter = new StreamWriter(homePath + @"\videoconversionout_" + uploadMode + ".log"))
+                using (StreamWriter outWriter = new StreamWriter(homePath + @"\videoconversionout_" + uploadMode1 + ".log"))
                 {
                     // Start the child process.
                     Process p = new Process();
@@ -313,37 +326,71 @@ namespace VideoConverter
                     p.WaitForExit();
                 }
 
-                if (uploadMode != UploadMode.No_Upload)
+                if (uploadMode1 != UploadMode.No_Upload || uploadMode2 != UploadMode.No_Upload)
                 {
                     this.Invoke((MethodInvoker)delegate
                     {
                         lblProgressText.Text = "Beginning File Upload";
                         progressBar1.Value = 0;
                     });
+
+
+                    UploadMode currentUploadMode = uploadMode1;
                     VideoManagerClient.UploadVideoProgress progressCallback = delegate(string filename, long currentProgress, long totalLength)
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
-                            lblProgressText.Text = "Uploading " + filename + " " + currentProgress + "/" + totalLength;
+                            lblProgressText.Text = "(" + currentUploadMode + ") Uploading " + filename + " " + currentProgress + "/" + totalLength;
                             int percentage = (int)(((double)currentProgress / (double)totalLength) * 100d);
                             progressBar1.Value = percentage > 100 ? 100 : percentage;
                         });
                     };
                     string remoteFilename;
-                    client.UploadVideo(uploadMode, out remoteFilename, outputFileInfo.FullName, serviceName, scriptureReference, tags, progressCallback);
-                    this.Invoke((MethodInvoker)delegate
+
+                    try
+                    {
+                        if (uploadMode1 != UploadMode.No_Upload)
+                        {
+                            currentUploadMode = uploadMode1;
+                            client.UploadVideo(uploadMode1, out remoteFilename, outputFileInfo.FullName, serviceName, scriptureReference, tags, progressCallback);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        errors += "Conversion for " + uploadMode1 + " failed due to: " + e.Message;
+                    }
+
+                    try
+                    {
+                        if (uploadMode2 != UploadMode.No_Upload)
+                        {
+                            currentUploadMode = uploadMode2;
+                            client.UploadVideo(uploadMode2, out remoteFilename, outputFileInfo.FullName, serviceName, scriptureReference, tags, progressCallback);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        errors += "Conversion for " + uploadMode2 + " failed due to: " + e.Message;
+                    }
+
+                    if (uploadMode1 != UploadMode.No_Upload || uploadMode2 != UploadMode.No_Upload)
+                    {
+                        this.Invoke((MethodInvoker)delegate
                         {
                             lblProgressText.Text = "Upload complete!";
                         });
-                    this.Invoke((MethodInvoker)delegate
+                    } else
                     {
-                        lblProgressText.Text = uploadMode + " Video Update Complete!";
-                    });
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            lblProgressText.Text = UploadMode.No_Upload + " Video Update Complete!";
+                        });
+                    }
                 }
             }
             catch (Exception e)
             {
-                errors += "Conversion for " + uploadMode + " failed due to: " + e.Message;
+                errors += "Conversion for " + uploadMode1 + " failed due to: " + e.Message;
             }
             return errors;
         }

@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Facebook;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Upload;
-using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 
-using Newtonsoft.Json;
-using VideoConverter.Properties;
-
 namespace VideoConverter
 {
-    class VideoManagerClient
+    public class VideoManagerClient
     {
         private CookieContainer cookieContainer;
         private string currentFilename;
@@ -43,12 +37,30 @@ namespace VideoConverter
                 uploadVideoTask.Wait();
                 remoteFilename = "youtube:" + this.youtubeVideoID;
                 return uploadVideoTask.Result;
+            } else if (uploadMode == UploadMode.Facebook)
+            {
+                object result = UploadVideoFacebook(localfilename, serviceName, reference, tags, progressCallback);
+                remoteFilename = "facebook:" + localfilename;
+                return true;
             }
             else
             {
                 remoteFilename = new FileInfo(localfilename).Name;
                 return true;
             }
+        }
+
+        private bool UploadVideoFacebook(string localfilename, string serviceName, string reference, string[] tags, UploadVideoProgress progressCallback)
+        {
+            string facebookPageID = Properties.Settings.Default.FacebookPageID;
+            string facebookToken = Properties.Settings.Default.FacebookToken;
+
+            FacebookVideoUploader facebookVideoUploader = new FacebookVideoUploader();
+            facebookVideoUploader.FacebookPageID = facebookPageID;
+            facebookVideoUploader.FacebookToken = facebookToken;
+
+            facebookVideoUploader.UploadVideo(localfilename, serviceName, reference, progressCallback);
+            return true;
         }
 
         private async Task<Boolean> UploadVideoYoutube(string localfilename, string serviceName, string reference, string[] tags, UploadVideoProgress progressCallback)

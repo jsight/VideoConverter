@@ -35,5 +35,11 @@ namespace VideoConverter
                 aboutBox1.ShowDialog(this);
             }
         }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settingsDialog = new SettingsDialog();
+            settingsDialog.ShowDialog(this);
+        }
     }
 }

@@ -5,9 +5,10 @@ using System.Text;
 
 namespace VideoConverter
 {
-    enum UploadMode
+    public enum UploadMode
     {
         Youtube,
+        Facebook,
         No_Upload
     }
 }
