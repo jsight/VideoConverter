@@ -43,17 +43,9 @@ C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.Pl
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.YouTube.v3.dll
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Newtonsoft.Json.dll
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Zlib.Portable.dll
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.pdb
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.xml
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.Auth.pdb
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.Auth.xml
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.Auth.PlatformServices.pdb
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.Auth.PlatformServices.xml
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.Core.pdb
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.Core.xml
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.PlatformServices.pdb
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.PlatformServices.xml
-C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.YouTube.v3.pdb
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Google.Apis.YouTube.v3.xml
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Newtonsoft.Json.xml
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Zlib.Portable.xml
@@ -63,3 +55,9 @@ C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\VideoConverter
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\VideoConverter.FormMainConverter.resources
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\VideoConverter.Properties.Resources.resources
 C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\VideoConverter.csproj.GenerateResource.Cache
+C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Facebook.dll
+C:\jsight\github\dotnet\VideoConverter\VideoConverter\bin\Release\Facebook.xml
+C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\fb_csharp_sdk_winforms.FacebookLoginDialog.resources
+C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\VideoConverter.SettingsDialog.resources
+C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\VideoConverter.csproj.CoreCompileInputs.cache
+C:\jsight\github\dotnet\VideoConverter\VideoConverter\obj\Release\VideoConverter.csproj.CopyComplete

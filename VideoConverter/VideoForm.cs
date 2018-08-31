@@ -161,12 +161,13 @@ namespace VideoConverter
                             errors += newErrors + "\n\n";
                     }
 
-                    if (checkBoxYouTubeUpload.Checked)
+                    if (checkBoxYouTubeUpload.Checked || checkboxFacebook.Checked)
                     {
                         string outputFileYoutube = txtOutputDir.Text + @"\" + inputFileInfo.Name.Replace(inputFileInfo.Extension, "_ytandfb.mp4");
                         string[] tags = new string[] { "Tri-City Baptist Church", "Goose Creek", "Moncks Corner", "Summerville", "trimmed" };
+                        UploadMode uploadMode1 = this.checkBoxYouTubeUpload.Checked ? UploadMode.Youtube : UploadMode.No_Upload;
                         UploadMode uploadMode2 = this.checkboxFacebook.Checked ? UploadMode.Facebook : UploadMode.No_Upload;
-                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, UploadMode.Youtube, uploadMode2, inputFileInfo, outputFileYoutube, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, true);
+                        string newErrors = ExecuteConversion(YOUTUBE_COMMAND_TEMPLATE_FILE, uploadMode1, uploadMode2, inputFileInfo, outputFileYoutube, serviceName, scriptureReference, tags, serviceDate, (int)numericSkipMinutesYouTube.Value, (int)numericSkipSecondsYouTube.Value, true);
                         if (newErrors != "")
                             errors += newErrors + "\n\n";
                     }
@@ -206,6 +207,11 @@ namespace VideoConverter
         {
             string errors = "";
             int totalSkipSeconds = (60 * skipMinutes) + skipSeconds;
+            int endTime = 0;
+            if ((int)numericEndMinutes.Value != 0 || (int)numericEndSeconds.Value != 0)
+            {
+                endTime = (60 * (int)numericEndMinutes.Value) + (int)numericEndSeconds.Value;
+            }
             string commandTemplate = LoadCommandTemplate(commandTemplateFile).Trim();
             string[] commandTemplateArr = commandTemplate.Split(' ');
             List<string> args = new List<string>();
@@ -223,6 +229,13 @@ namespace VideoConverter
                         break;
                     case "${skipSeconds}":
                         args.Add("" + totalSkipSeconds);
+
+                        if (endTime != 0)
+                        {
+                            args.Add("-to");
+                            args.Add("" + endTime);
+                        }
+
                         break;
                     default:
                         args.Add(arg);

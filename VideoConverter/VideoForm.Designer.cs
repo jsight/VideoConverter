@@ -57,10 +57,17 @@
             this.checkboxFullUpload = new System.Windows.Forms.CheckBox();
             this.checkBoxYouTubeUpload = new System.Windows.Forms.CheckBox();
             this.checkboxFacebook = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericEndSeconds = new System.Windows.Forms.NumericUpDown();
+            this.numericEndMinutes = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipSecondsWebsite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipMinutesWebsite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipSecondsYouTube)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipMinutesYouTube)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericEndSeconds)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericEndMinutes)).BeginInit();
             this.SuspendLayout();
             // 
             // label6
@@ -97,7 +104,7 @@
             // 
             // numericSkipSecondsWebsite
             // 
-            this.numericSkipSecondsWebsite.Location = new System.Drawing.Point(296, 160);
+            this.numericSkipSecondsWebsite.Location = new System.Drawing.Point(303, 160);
             this.numericSkipSecondsWebsite.Maximum = new decimal(new int[] {
             59,
             0,
@@ -119,7 +126,7 @@
             // 
             // numericSkipMinutesWebsite
             // 
-            this.numericSkipMinutesWebsite.Location = new System.Drawing.Point(187, 160);
+            this.numericSkipMinutesWebsite.Location = new System.Drawing.Point(194, 160);
             this.numericSkipMinutesWebsite.Name = "numericSkipMinutesWebsite";
             this.numericSkipMinutesWebsite.Size = new System.Drawing.Size(45, 20);
             this.numericSkipMinutesWebsite.TabIndex = 45;
@@ -136,7 +143,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(238, 162);
+            this.label5.Location = new System.Drawing.Point(245, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 40;
@@ -152,7 +159,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(134, 162);
+            this.label4.Location = new System.Drawing.Point(141, 162);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 39;
@@ -197,7 +204,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(94, 242);
+            this.progressBar1.Location = new System.Drawing.Point(96, 272);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(320, 23);
             this.progressBar1.TabIndex = 28;
@@ -214,7 +221,7 @@
             // lblProgress
             // 
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(94, 223);
+            this.lblProgress.Location = new System.Drawing.Point(96, 253);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(51, 13);
             this.lblProgress.TabIndex = 29;
@@ -230,7 +237,7 @@
             // lblProgressText
             // 
             this.lblProgressText.AutoSize = true;
-            this.lblProgressText.Location = new System.Drawing.Point(151, 223);
+            this.lblProgressText.Location = new System.Drawing.Point(153, 253);
             this.lblProgressText.Name = "lblProgressText";
             this.lblProgressText.Size = new System.Drawing.Size(87, 13);
             this.lblProgressText.TabIndex = 30;
@@ -247,7 +254,7 @@
             // 
             // numericSkipSecondsYouTube
             // 
-            this.numericSkipSecondsYouTube.Location = new System.Drawing.Point(296, 191);
+            this.numericSkipSecondsYouTube.Location = new System.Drawing.Point(303, 191);
             this.numericSkipSecondsYouTube.Maximum = new decimal(new int[] {
             59,
             0,
@@ -259,7 +266,7 @@
             // 
             // numericSkipMinutesYouTube
             // 
-            this.numericSkipMinutesYouTube.Location = new System.Drawing.Point(187, 191);
+            this.numericSkipMinutesYouTube.Location = new System.Drawing.Point(194, 191);
             this.numericSkipMinutesYouTube.Name = "numericSkipMinutesYouTube";
             this.numericSkipMinutesYouTube.Size = new System.Drawing.Size(45, 20);
             this.numericSkipMinutesYouTube.TabIndex = 60;
@@ -267,7 +274,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(238, 193);
+            this.label7.Location = new System.Drawing.Point(245, 193);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(52, 13);
             this.label7.TabIndex = 49;
@@ -276,7 +283,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(134, 193);
+            this.label8.Location = new System.Drawing.Point(141, 193);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 48;
@@ -316,17 +323,68 @@
             // checkboxFacebook
             // 
             this.checkboxFacebook.AutoSize = true;
-            this.checkboxFacebook.Location = new System.Drawing.Point(369, 193);
+            this.checkboxFacebook.Location = new System.Drawing.Point(376, 193);
             this.checkboxFacebook.Name = "checkboxFacebook";
             this.checkboxFacebook.Size = new System.Drawing.Size(123, 17);
             this.checkboxFacebook.TabIndex = 66;
             this.checkboxFacebook.Text = "Upload to Facebook";
             this.checkboxFacebook.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(25, 222);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(111, 13);
+            this.label10.TabIndex = 67;
+            this.label10.Text = "End Time (if specified)";
+            // 
+            // numericEndSeconds
+            // 
+            this.numericEndSeconds.Location = new System.Drawing.Point(304, 220);
+            this.numericEndSeconds.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericEndSeconds.Name = "numericEndSeconds";
+            this.numericEndSeconds.Size = new System.Drawing.Size(50, 20);
+            this.numericEndSeconds.TabIndex = 71;
+            // 
+            // numericEndMinutes
+            // 
+            this.numericEndMinutes.Location = new System.Drawing.Point(195, 220);
+            this.numericEndMinutes.Name = "numericEndMinutes";
+            this.numericEndMinutes.Size = new System.Drawing.Size(45, 20);
+            this.numericEndMinutes.TabIndex = 70;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(246, 222);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(52, 13);
+            this.label11.TabIndex = 69;
+            this.label11.Text = "Seconds:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(142, 222);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(47, 13);
+            this.label12.TabIndex = 68;
+            this.label12.Text = "Minutes:";
+            // 
             // VideoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.numericEndSeconds);
+            this.Controls.Add(this.numericEndMinutes);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.checkboxFacebook);
             this.Controls.Add(this.checkBoxYouTubeUpload);
             this.Controls.Add(this.checkboxFullUpload);
@@ -357,11 +415,13 @@
             this.Controls.Add(this.lblProgressText);
             this.Controls.Add(this.label1);
             this.Name = "VideoForm";
-            this.Size = new System.Drawing.Size(546, 280);
+            this.Size = new System.Drawing.Size(546, 309);
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipSecondsWebsite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipMinutesWebsite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipSecondsYouTube)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSkipMinutesYouTube)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericEndSeconds)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericEndMinutes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,5 +458,10 @@
         private System.Windows.Forms.CheckBox checkboxFullUpload;
         private System.Windows.Forms.CheckBox checkBoxYouTubeUpload;
         private System.Windows.Forms.CheckBox checkboxFacebook;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numericEndSeconds;
+        private System.Windows.Forms.NumericUpDown numericEndMinutes;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
     }
 }
